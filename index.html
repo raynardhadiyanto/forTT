@@ -692,7 +692,7 @@
         
         // Set to 'true' for production (cards unlock on their day)
         // Set to 'false' for testing (all cards accessible)
-        const ENABLE_DAILY_LOCK = true;
+        const ENABLE_DAILY_LOCK = false;
         const YEAR = 2025;
 
         // ══════════════════════════════════════════════════════════════════
@@ -700,7 +700,7 @@
         const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
         function isCardUnlocked(day) {
-            if (!ENABLE_DAILY_LOCK) return true;
+            if (!ENABLE_DAILY_LOCK) return false;
             const today = new Date();
             const cardDate = new Date(YEAR, 11, day);
             today.setHours(0, 0, 0, 0);
