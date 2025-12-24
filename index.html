@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Trang ♡</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Quicksand:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --rose: #e8c4c4;
+            --blush: #f5e6e8;
+            --cream: #faf6f2;
+            --dusty-rose: #c9a9a6;
+            --deep-mauve: #8b7b8b;
+            --gold: #c9a962;
+            --text-dark: #4a4a4a;
+            --pine: #4a5d4a;
+            --berry: #8b4a5e;
+            --snow: #f8f9fa;
+            --soft-pink: #f9e8e8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(180deg, var(--cream) 0%, var(--blush) 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: var(--text-dark);
+        }
+
+        /* Snowfall */
+        .snowfall {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .snowflake {
+            position: absolute;
+            color: white;
+            font-size: 14px;
+            opacity: 0.6;
+            animation: fall linear infinite;
+            text-shadow: 0 0 5px rgba(255,255,255,0.5);
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-100px) rotate(0deg); }
+            100% { transform: translateY(100vh) rotate(360deg); }
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 50px 20px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            font-weight: 400;
+            color: var(--berry);
+            margin-bottom: 8px;
+            letter-spacing: 0.02em;
+        }
+
+        .header .subtitle {
+            font-size: 0.9rem;
+            color: var(--dusty-rose);
+            font-weight: 400;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .header .date-range {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1rem;
+            color: var(--pine);
+            margin-top: 5px;
+        }
+
+        .decorative-line {
+            width: 60px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            margin: 18px auto;
+        }
+
+        /* Calendar Grid */
+        .calendar-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 10px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 22px;
+            padding: 15px 0 40px;
+        }
+
+        /* Memory Card */
+        .memory-card {
+            height: 300px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .memory-card.locked {
+            cursor: not-allowed;
+        }
+
+        .card-front {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(145deg, var(--snow), var(--blush));
+            border-radius: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 
+                0 8px 32px rgba(139, 123, 139, 0.12),
+                inset 0 2px 0 rgba(255,255,255,0.8);
+            border: 1px solid rgba(255,255,255,0.7);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .memory-card:not(.locked):hover .card-front {
+            transform: translateY(-5px);
+            box-shadow: 
+                0 15px 45px rgba(139, 74, 94, 0.2),
+                inset 0 2px 0 rgba(255,255,255,0.8);
+        }
+
+        .card-front::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 1px solid rgba(201, 169, 98, 0.2);
+            border-radius: 12px;
+            pointer-events: none;
+        }
+
+        .ribbon {
+            position: absolute;
+            top: -5px;
+            right: 18px;
+            width: 26px;
+            height: 45px;
+            background: var(--berry);
+            box-shadow: 0 3px 8px rgba(139, 74, 94, 0.25);
+        }
+
+        .ribbon::before {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            border-left: 13px solid var(--berry);
+            border-right: 13px solid var(--berry);
+            border-bottom: 8px solid transparent;
+        }
+
+        .card-day {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.85rem;
+            color: var(--pine);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 3px;
+        }
+
+        .card-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4rem;
+            color: var(--berry);
+            font-weight: 400;
+            line-height: 1;
+            margin-bottom: 3px;
+        }
+
+        .card-month {
+            font-size: 0.8rem;
+            color: var(--dusty-rose);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .card-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            color: var(--deep-mauve);
+            font-style: italic;
+        }
+
+        .card-hint {
+            position: absolute;
+            bottom: 18px;
+            font-size: 0.7rem;
+            color: var(--dusty-rose);
+            opacity: 0.8;
+            letter-spacing: 0.06em;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .locked-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(248, 249, 250, 0.6);
+            backdrop-filter: blur(3px);
+            border-radius: 18px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .memory-card.locked .locked-overlay {
+            display: flex;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(74, 74, 74, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--cream);
+            border-radius: 24px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.3);
+            animation: modalIn 0.4s ease;
+        }
+
+        @keyframes modalIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--berry), var(--deep-mauve));
+            padding: 30px 25px 25px;
+            text-align: center;
+            position: relative;
+        }
+
+        .modal-header .day-label {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.8);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .modal-header h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            color: white;
+            font-weight: 400;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .modal-close:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .modal-body {
+            padding: 25px;
+        }
+
+        .modal-body p {
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+        }
+
+        .modal-body .image-container {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .modal-body .image-container img {
+            max-width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .modal-body .image-caption {
+            font-size: 0.85rem;
+            color: var(--dusty-rose);
+            font-style: italic;
+            margin-top: 10px;
+        }
+
+        .modal-body .emoji-accent {
+            font-size: 1.5rem;
+            text-align: center;
+            margin: 15px 0;
+        }
+
+        .modal-body h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            color: var(--berry);
+            margin: 25px 0 12px;
+        }
+
+        /* Scrollbar */
+        .modal-content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .modal-content::-webkit-scrollbar-track {
+            background: var(--blush);
+        }
+
+        .modal-content::-webkit-scrollbar-thumb {
+            background: var(--dusty-rose);
+            border-radius: 3px;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 20px 20px 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-heart {
+            font-size: 1.3rem;
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .calendar-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+
+            .memory-card {
+                height: 260px;
+            }
+
+            .card-number {
+                font-size: 3rem;
+            }
+
+            .card-title {
+                font-size: 1.1rem;
+            }
+
+            .modal-content {
+                border-radius: 20px;
+                max-height: 95vh;
+            }
+
+            .modal-header {
+                padding: 25px 20px 20px;
+            }
+
+            .modal-header h2 {
+                font-size: 1.8rem;
+            }
+
+            .modal-body {
+                padding: 20px;
+            }
+        }
+
+        /* Animation */
+        .memory-card {
+            opacity: 0;
+            transform: translateY(25px);
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Rules box */
+        .rules-box {
+            background: white;
+            border-radius: 16px;
+            padding: 20px 25px;
+            max-width: 500px;
+            margin: 0 auto 20px;
+            box-shadow: 0 4px 20px rgba(139, 74, 94, 0.08);
+            border: 1px solid rgba(201, 169, 98, 0.15);
+        }
+
+        .rules-box h3 {
+            font-family: 'Cormorant Garamond', serif;
+            color: var(--berry);
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .rules-box ul {
+            list-style: none;
+            font-size: 0.85rem;
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+
+        .rules-box li {
+            padding-left: 20px;
+            position: relative;
+            margin-bottom: 5px;
+        }
+
+        .rules-box li::before {
+            content: '♡';
+            position: absolute;
+            left: 0;
+            color: var(--dusty-rose);
+            font-size: 0.7rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="snowfall" id="snowfall"></div>
+
+    <header class="header">
+        <h1>7 Days of Us</h1>
+        <p class="subtitle">A Gift Just For You, Trang</p>
+        <p class="date-range">December 25 – December 31, 2025</p>
+        <div class="decorative-line"></div>
+    </header>
+
+    <main class="calendar-container">
+        <div class="rules-box">
+            <h3>📜 The Rules</h3>
+            <ul>
+                <li>Open one box each day — no peeking ahead!</li>
+                <li>Each box unlocks only on its designated day</li>
+                <li>Enjoy the journey... it's a countdown 🤫</li>
+            </ul>
+        </div>
+
+        <div class="calendar-grid" id="calendarGrid"></div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-heart">💕</div>
+    </footer>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content" id="modalContent">
+            <div class="modal-header">
+                <span class="day-label" id="modalDayLabel"></span>
+                <h2 id="modalTitle"></h2>
+                <button class="modal-close" onclick="closeModal()">×</button>
+            </div>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+
+    <script>
+        // ╔════════════════════════════════════════════════════════════════╗
+        // ║  ✨ MEMORY CONTENT - CUSTOMIZE HERE ✨                         ║
+        // ╚════════════════════════════════════════════════════════════════╝
+
+        const memories = [
+            // DAY 1 - December 25 - SPARK
+            {
+                day: 25,
+                title: "Spark",
+                content: `
+                    <p>idk if u expected anything like this for Christmas, but since u told me that u didn't really wanna do anything on the day and rest, I thought that this maybe the right time to give u this kind of style. I told u I wanted to make a tt website, so here it is hehe 😝</p>
+                    
+                    <p>I wanted to make this as special as possible cause this is how much u mean to me. I know right now we're in an uncertain stage, but I believe in us a lot. We have a lot of differences in lifestyle, but a lot of similar values and I appreciate that. I realize that since our time together I have still so much to learn and I am willing to be the best for you.</p>
+                    
+                    <div class="image-container">
+                        <img src="images/01-beach.jpg" alt="The photo that started it all">
+                        <p class="image-caption">the catfish photo that started it all 👀👀</p>
+                    </div>
+                    
+                    <div class="image-container">
+                        <img src="images/02-first-message.jpg" alt="First messages">
+                        <p class="image-caption">tadaaa ✨</p>
+                    </div>
+                    
+                    <div class="image-container">
+                        <img src="images/03-first-vidcall.jpg" alt="First video call">
+                        <p class="image-caption">idk what we were doing but hi to us first vidcall 📹</p>
+                    </div>
+                    
+                    <p>I'm excited every single time I meet u, almost like it's the first time again, and I still see u as the clumsy girl who begged for coins to get transit money cause she forgot her compass card 😂</p>
+                    
+                    <div class="image-container">
+                        <img src="images/04-compass.jpg" alt="Compass card moment">
+                        <p class="image-caption">the iconic moment 🚌</p>
+                    </div>
+                    
+                    <div class="emoji-accent">✨💫✨</div>
+                `
+            },
+
+            // DAY 2 - December 26 - US
+            {
+                day: 26,
+                title: "Us",
+                content: `
+                    <p>Maybe let's fast forward a bit and jump to where we already meet. I think I've talked about our first date a little too many times, so let's talk about other things.</p>
+                    
+                    <p>I remember when I was navigating my way through the city for the first time that u told me a very interesting fact. U say that u can go home from many different stations — brentwood, gilmore, rupert, renfrew. I was like wow how ya. idk why I was shocked and find it interesting but, I do really enjoy the littlest things u tell me.</p>
+                    
+                    <p>So, I'm just gonna pull out little snippets that I enjoy of us tgt.</p>
+                    
+                    <div class="image-container">
+                        <img src="images/05-creampuff.jpg" alt="Cream puffs">
+                        <p class="image-caption">I love the cream puff, ik u hate baking it cause its so hard rn, but isokayy 🥐</p>
+                    </div>
+                    
+                    <div class="image-container">
+                        <img src="images/06-kdrama-beach.jpg" alt="Beach moment">
+                        <p class="image-caption">kdrama-esque gone wrong 😂 I remember u almost slipped. lucky I hold u 🙄 it's so funny how ur pose look like 😡</p>
+                    </div>
+                    
+                    <div class="image-container">
+                        <img src="images/07-birthday-gifts.jpg" alt="Birthday gifts">
+                        <p class="image-caption">I love it so much it's the cutest thing anyone's ever given 🥹</p>
+                    </div>
+                    
+                    <div class="image-container">
+                        <img src="images/08-jollibee.jpg" alt="Jollibee">
+                        <p class="image-caption">our most random day and first time trying Jollibee. u wanted 1 peach mango and the guy gave u 2 😂 We also went around and end up in the pool bar playing darts, pool, and punching machine lmao</p>
+                    </div>
+                    
+                    <div class="image-container">
+                        <img src="images/09-cute-selfie.jpg" alt="Cute selfie">
+                        <p class="image-caption">ur day laa 💞💞 I remember we took the ferry to go to northvan and went to shipyards. it was actually quite interesting lmao we even played in the water fountain cause u dared me</p>
+                    </div>
+                    
+                    <div class="emoji-accent">💕🌊💕</div>
+                `
+            },
+
+            // DAY 3 - December 27 - BREAKING POINT
+            {
+                day: 27,
+                title: "Breaking Point",
+                content: `
+                    <p><em>Content coming soon...</em></p>
+                    
+                    <p style="color: var(--dusty-rose); text-align: center; margin-top: 40px;">— Raynard will fill this in —</p>
+                    
+                    <div class="emoji-accent">🌧️</div>
+                `
+            },
+
+            // DAY 4 - December 28 - LETTING GO
+            {
+                day: 28,
+                title: "Letting Go",
+                content: `
+                    <p><em>Content coming soon...</em></p>
+                    
+                    <p style="color: var(--dusty-rose); text-align: center; margin-top: 40px;">— Raynard will fill this in —</p>
+                    
+                    <div class="emoji-accent">🍃</div>
+                `
+            },
+
+            // DAY 5 - December 29 - GROWTH
+            {
+                day: 29,
+                title: "Growth",
+                content: `
+                    <p><em>Content coming soon...</em></p>
+                    
+                    <p style="color: var(--dusty-rose); text-align: center; margin-top: 40px;">— Raynard will fill this in —</p>
+                    
+                    <div class="emoji-accent">🌱</div>
+                `
+            },
+
+            // DAY 6 - December 30 - THRESHOLD
+            {
+                day: 30,
+                title: "Threshold",
+                content: `
+                    <p><em>Content coming soon...</em></p>
+                    
+                    <p style="color: var(--dusty-rose); text-align: center; margin-top: 40px;">— Raynard will fill this in —</p>
+                    
+                    <div class="emoji-accent">🚪✨</div>
+                `
+            },
+
+            // DAY 7 - December 31 - PRESENT
+            {
+                day: 31,
+                title: "Present",
+                content: `
+                    <p><em>Content coming soon...</em></p>
+                    
+                    <p style="color: var(--dusty-rose); text-align: center; margin-top: 40px;">— Raynard will fill this in —</p>
+                    
+                    <div class="emoji-accent">🎆🎊🎆</div>
+                `
+            }
+        ];
+
+        // ╔════════════════════════════════════════════════════════════════╗
+        // ║  ⚙️ SETTINGS                                                   ║
+        // ╚════════════════════════════════════════════════════════════════╝
+        
+        // Set to 'true' for production (cards unlock on their day)
+        // Set to 'false' for testing (all cards accessible)
+        const ENABLE_DAILY_LOCK = true;
+        const YEAR = 2025;
+
+        // ══════════════════════════════════════════════════════════════════
+
+        const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+        function isCardUnlocked(day) {
+            if (!ENABLE_DAILY_LOCK) return true;
+            const today = new Date();
+            const cardDate = new Date(YEAR, 11, day);
+            today.setHours(0, 0, 0, 0);
+            cardDate.setHours(0, 0, 0, 0);
+            return today >= cardDate;
+        }
+
+        function getDayName(day) {
+            const date = new Date(YEAR, 11, day);
+            return dayNames[date.getDay()];
+        }
+
+        function openModal(index) {
+            const memory = memories[index];
+            if (!isCardUnlocked(memory.day)) return;
+
+            document.getElementById('modalDayLabel').textContent = `December ${memory.day}`;
+            document.getElementById('modalTitle').textContent = memory.title;
+            document.getElementById('modalBody').innerHTML = memory.content;
+            document.getElementById('modalOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Close modal on overlay click
+        document.getElementById('modalOverlay').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) closeModal();
+        });
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // Generate cards
+        const grid = document.getElementById('calendarGrid');
+        
+        memories.forEach((memory, index) => {
+            const card = document.createElement('div');
+            const unlocked = isCardUnlocked(memory.day);
+            card.className = `memory-card ${unlocked ? '' : 'locked'}`;
+            card.style.animationDelay = `${index * 0.08}s`;
+            
+            const dayName = getDayName(memory.day);
+            
+            card.innerHTML = `
+                <div class="card-front">
+                    <div class="ribbon"></div>
+                    <span class="card-day">${dayName}</span>
+                    <span class="card-number">${memory.day}</span>
+                    <span class="card-month">December</span>
+                    <span class="card-title">${memory.title}</span>
+                    ${unlocked 
+                        ? '<span class="card-hint">tap to open ♡</span>'
+                        : `<span class="card-hint">🔒 opens Dec ${memory.day}</span>`
+                    }
+                    <div class="locked-overlay"></div>
+                </div>
+            `;
+            
+            card.addEventListener('click', () => openModal(index));
+            grid.appendChild(card);
+        });
+
+        // Snowfall
+        const snowfall = document.getElementById('snowfall');
+        const snowflakes = ['❄', '❅', '❆', '✧', '·'];
+        
+        for (let i = 0; i < 35; i++) {
+            const flake = document.createElement('span');
+            flake.className = 'snowflake';
+            flake.textContent = snowflakes[Math.floor(Math.random() * snowflakes.length)];
+            flake.style.left = `${Math.random() * 100}%`;
+            flake.style.animationDuration = `${10 + Math.random() * 15}s`;
+            flake.style.animationDelay = `${Math.random() * 10}s`;
+            flake.style.opacity = 0.2 + Math.random() * 0.4;
+            flake.style.fontSize = `${10 + Math.random() * 12}px`;
+            snowfall.appendChild(flake);
+        }
+    </script>
+</body>
+</html>
