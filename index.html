@@ -110,14 +110,16 @@
         }
 
         .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
             gap: 22px;
             padding: 15px 0 40px;
         }
 
         /* Memory Card */
         .memory-card {
+            width: 240px;
             height: 300px;
             cursor: pointer;
             position: relative;
@@ -504,9 +506,9 @@
     <div class="snowfall" id="snowfall"></div>
 
     <header class="header">
-        <h1>7 Days of Us</h1>
-        <p class="subtitle">A Gift Just For You, Trang</p>
-        <p class="date-range">December 25 – December 31, 2025</p>
+        <h1>The RH & TT Advent Calendar</h1>
+        <p class="subtitle">Love Always, Raynard Arifin Hadiyanto</p>
+        <p class="date-range">2020-2025</p>
         <div class="decorative-line"></div>
     </header>
 
